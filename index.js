@@ -12,9 +12,6 @@ const messaageRoutes = require("./routes/messaage.routes.js");
 const SMPT = process.env.SMPT || 5050;
 const connectToMongoDB = require("./DB/connectToMongoDB.js");
 
-app.use(cors({
-        origin : "https://chat-app-one-to-one.netlify.app",
-}))
 app.use(express.json());
 app.use(cookieParser());
 
