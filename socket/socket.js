@@ -12,6 +12,7 @@ const io = new Server(server, {
     }
 })
 
+
 const getReceiverSocketId = (receiverId) => {
    return userScoketMap[receiverId]
 }
