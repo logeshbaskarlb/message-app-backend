@@ -15,7 +15,7 @@ const connectToMongoDB = require("./DB/connectToMongoDB.js");
 app.use(express.json());
 app.use(cookieParser());
 
-let _dirname = path.resolve();
+
 app.use(express.static(path.join()));
 
 app.use("/api/auth", authRoutes);
