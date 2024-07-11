@@ -14,11 +14,12 @@ const signup = async (req,res) =>{
         // HASH PASSWORD HERE
         const salt = await bcrypt.genSalt (10);
         const hashedPassword = await bcrypt.hash (password, salt);
+
         // https://avatar-placeholder.iran.liara.run/
         const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`
         const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`
         const newUser = new User({
-            fullname,
+        fullname,
         username,
         password: hashedPassword,
         gender,
@@ -30,9 +31,8 @@ const signup = async (req,res) =>{
     await newUser.save()
     res.status(201).json({
         _id : newUser._id,
+        username :newUser.username,
         fullname :newUser.fullname,
-        lastname :newUser.lastname,
-        password :newUser.password,
         profilePicture :newUser.profilePicture,
     })
    }else{
@@ -59,8 +59,7 @@ try {
         res.status(201).json({
             _id : user._id,
             fullname :user.fullname,
-            lastname :user.lastname,
-            password :user.password,
+            username :user.username,
             profilePicture :user.profilePicture,
         })
 

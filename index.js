@@ -15,6 +15,9 @@ const connectToMongoDB = require("./DB/connectToMongoDB.js");
 app.use(express.json());
 app.use(cookieParser());
 
+app.use(cors({
+    origin  :  "*"
+}))
 
 app.use(express.static(path.join()));
 

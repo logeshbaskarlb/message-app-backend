@@ -24,24 +24,18 @@ const sendMessage = async (req, res) => {
       message,
     });
 
-    if (newMessage) {
-      conversation.message.push(newMessage._id);
-    }
-    await conversation.save();
-    await newMessage.save();
+    conversation.message.push(newMessage._id);
 
-    // await Promise.all([conversation.save() , newMessage.save()])
-    // Socket.io function
+    await Promise.all([conversation.save(), newMessage.save()]);
 
     const receiverSocketId = getReceiverSocketId(receiverId);
     if (receiverSocketId) {
-        // io.to(<socket_id>).emit() used to send events to specific client
         io.to(receiverSocketId).emit("newMessage", newMessage);
     }
 
     res.status(201).json(newMessage);
   } catch (error) {
-    console.log("Error in sendmessage controller", error.message);
+    console.log("Error in sendMessage controller", error.message);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -53,7 +47,7 @@ const getMessages = async (req, res) => {
 
     const conversation = await Conversation.findOne({
         participant: { $all: [senderId, userToChatID] },
-    }).populate("message"); // not reference  but actual message
+    }).populate("message");
 
     if (!conversation) return res.status(200).json([]);
 
@@ -61,7 +55,7 @@ const getMessages = async (req, res) => {
 
     res.status(200).json(message);
   } catch (error) {
-    console.log("Error in getMessage controller", error.message);
+    console.log("Error in getMessages controller", error.message);
     res.status(500).json({ error: "Internal server error" });
   }
 };
